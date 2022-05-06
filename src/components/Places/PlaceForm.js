@@ -1,16 +1,44 @@
-import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import { Colors } from "../../constants/colors";
 
 const PlaceForm = () => {
+
+    const [ title, setTitle ] = useState("");
+
+    const titleInputHandler = (enteredTitle) => {
+        setTitle(enteredTitle);
+    }
+
     return(
-        <View>
-            <Text>Add Place Form</Text>
-        </View> 
+        <ScrollView style={styles.formContainer}>
+            <View>
+                <Text style={styles.label}>Title</Text>
+                <TextInput style={styles.input} onChange={titleInputHandler} value={title} />
+            </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
-
+    formContainer:{
+        flex:1,
+        padding:24,
+    },
+    label:{
+        marginBottom:4,
+        color: Colors.primary500,
+        fontWeight:"bold",
+    },
+    input:{
+        backgroundColor: Colors.primary100,
+        borderBottomColor: Colors.primary700,
+        borderBottomWidth: 2,
+        fontSize:16,
+        marginVertical:8,
+        paddingVertical:8,
+        paddingHorizontal:4,
+    }
 });
 
 export default PlaceForm;
