@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import PlaceForm from "../components/Places/PlaceForm";
 
 const AddPlace = () => {
+
     return(
         <PlaceForm/>
     );
