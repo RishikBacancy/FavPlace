@@ -4,27 +4,30 @@ import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native'
 import OutlineButton from '../UI/OutlineButton';
 import { Colors } from '../../constants/Colors';
 import Geolocation from '@react-native-community/geolocation';
-import { getMapPreview } from '../../util/location';
 
-const LocationPicker = () => {
+const LocationPicker = ({onLocationSelected}) => {
 	const [ pickLocation, setPickLocation ] = useState();
 
 	const navigation = useNavigation();
 	const route = useRoute();
 	const isFocused = useIsFocused();
 
-	useEffect(()=>{
+	useEffect(
+		() => {
+			if (isFocused && route.params) {
+				const mapPickedLocation = {
+					lat: route.params.pickedLat,
+					lng: route.params.pickedLng
+				};
+				setPickLocation(mapPickedLocation);
+			}
+		},
+		[ route, isFocused ]
+	);
 
-		if(isFocused && route.params) {
-			const mapPickedLocation = { 
-				lat: route.params.pickedLat, 
-				lng: route.params.pickedLng 
-			};
-			setPickLocation(mapPickedLocation);
-		}
-
-		
-	},[isFocused, route])
+	useEffect(()=> {
+		onLocationSelected(pickLocation);
+	},[pickLocation, onLocationSelected])
 
 	const locateUserHandler = () => {
 		const location = Geolocation.getCurrentPosition(
@@ -48,7 +51,7 @@ const LocationPicker = () => {
 	let mapPreview = <Text>Location not picked yet - please select location!</Text>;
 
 	if (pickLocation) {
-		mapPreview = <Text>{"Longitude: "+ pickLocation.lng + "\nLatitude: "+ pickLocation.lat}</Text>;
+		mapPreview = <Text>{'Longitude: ' + pickLocation.lng + '\nLatitude: ' + pickLocation.lat}</Text>;
 	}
 
 	return (

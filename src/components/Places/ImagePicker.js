@@ -4,7 +4,7 @@ import { launchCamera } from 'react-native-image-picker';
 import { Colors } from '../../constants/Colors';
 import OutlineButton from '../UI/OutlineButton';
 
-const ImagePicker = () => {
+const ImagePicker = ({onImageSelected}) => {
 
     const [ imageSelected, setImageSelected ] = useState();
 
@@ -18,6 +18,7 @@ const ImagePicker = () => {
         const uri = result.assets.map(({uri})=>uri)
 
         setImageSelected(uri[0]);
+        onImageSelected(uri[0]);
 	};
 
 
