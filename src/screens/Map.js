@@ -28,7 +28,7 @@ const Map = ({ navigation }) => {
 			return;
 		}
 
-        console.log("Lat : "+ location.lat, " lng : "+ location.lng);
+        //console.log("Lat : "+ location.lat, " lng : "+ location.lng);
 
 		navigation.navigate('AddPlace', {
 			pickedLat: location.lat,
